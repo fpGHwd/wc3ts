@@ -20,6 +20,11 @@ import (
 // DefaultProbeInterval is how often to probe peers for games.
 const DefaultProbeInterval = 5 * time.Second
 
+// DefaultResponderPort is the UDP port used for wc3ts peer discovery queries.
+// It must remain separate from the Warcraft III LAN port so both processes can
+// listen concurrently, including when Warcraft III runs under Wine.
+const DefaultResponderPort = 6113
+
 // udpBufferSize is the size of the UDP receive buffer.
 const udpBufferSize = 512
 
@@ -180,7 +185,7 @@ func (m *Manager) probeLocal(version w3gs.GameVersion) {
 func (m *Manager) probePeer(peerIP netip.Addr, version w3gs.GameVersion) {
 	addr := &net.UDPAddr{
 		IP:   peerIP.AsSlice(),
-		Port: lan.DefaultPort,
+		Port: DefaultResponderPort,
 	}
 
 	pkt := &w3gs.SearchGame{

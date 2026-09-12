@@ -58,7 +58,8 @@ func (d *Discovery) Run(ctx context.Context) error {
 	// Subscribe to peer-set deltas, rate-limited. The bus is only used as a
 	// change trigger; peer data is pulled from Status, since Notify.NetMap is
 	// deprecated and not delivered after the initial notify on Linux.
-	mask := ipn.NotifyPeerChanges | ipn.NotifyRateLimit
+	// mask := ipn.NotifyPeerChanges | ipn.NotifyRateLimit
+	mask := ipn.NotifyPeerChanges
 
 	watcher, err := d.client.WatchIPNBus(ctx, mask)
 	if err != nil {

@@ -10,7 +10,6 @@ import (
 	"github.com/nielsAD/gowarcraft3/protocol/w3gs"
 
 	"github.com/kradalby/wc3ts/game"
-	"github.com/kradalby/wc3ts/lan"
 )
 
 // Responder listens for SearchGame queries from remote Tailscale peers
@@ -25,10 +24,10 @@ type Responder struct {
 
 // NewResponder creates a new responder that listens on the given Tailscale IP.
 func NewResponder(registry *game.Registry, localIP netip.Addr) (*Responder, error) {
-	// Listen on Tailscale IP, port 6112
+	// Listen on the wc3ts-specific discovery port. Warcraft III owns port 6112.
 	addr := &net.UDPAddr{
 		IP:   localIP.AsSlice(),
-		Port: lan.DefaultPort,
+		Port: DefaultResponderPort,
 	}
 
 	conn, err := net.ListenUDP("udp4", addr)

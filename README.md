@@ -105,6 +105,7 @@ The proxy will automatically:
 
 - Tailscale installed and connected
 - Warcraft III 1.26-1.28 (defaults to 1.26)
+- UDP 6113 permitted between wc3ts nodes by host firewalls and Tailscale ACLs
 
 Other classic minor versions can be selected with `-version`, but are
 experimental until validated against packets from the corresponding client.
@@ -118,6 +119,8 @@ experimental until validated against packets from the corresponding client.
 ### Query Response
 
 When a remote peer probes us, our responder replies with any locally hosted games. This enables bidirectional discovery - you can join their games and they can join yours.
+
+wc3ts uses UDP 6113 for these peer-to-peer discovery queries, leaving Warcraft III's UDP/TCP 6112 port available to the game itself.
 
 ### Game Broadcasting
 
